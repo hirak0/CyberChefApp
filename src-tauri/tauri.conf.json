@@ -7,7 +7,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "cyberchef-app",
+    "productName": "CyberChefApp",
     "version": "0.0.0"
   },
   "tauri": {
@@ -56,10 +56,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 900,
         "resizable": true,
-        "title": "cyberchef-app",
-        "width": 800
+        "title": "CyberChefApp",
+        "width": 1800
       }
     ]
   }
