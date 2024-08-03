@@ -7,9 +7,9 @@ on:
         required: true
         default: 'main'
       tag_version:
-        description: 'The version of CyberChef upstream, eg: use 10.17.0 instead of v10.17.0'
+        description: 'The version of CyberChef upstream, eg: use 10.18.9 instead of v10.18.9'
         required: true
-        default: '10.17.0'
+        default: '10.18.9'
 
 # https://docs.github.com/zh/actions/using-jobs/assigning-permissions-to-jobs
 permissions: write-all
@@ -19,7 +19,7 @@ permissions: write-all
 #   repository-projects: write
 
 env:
-  APP_NAME: cyberchef-app
+  APP_NAME: CyberChefApp
 
 defaults:
   run:
