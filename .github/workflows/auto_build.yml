@@ -64,7 +64,7 @@ jobs:
                 return latest_tag_name;
             }
             
-            async function check_tag_updated(upstream_owner = 'gchq', upstream_repo = 'CyberChef') {
+            async function check_tag_updated(upstream_owner = 'Raka-loah', upstream_repo = 'SRK-Toolbox') {
                 const latest_upstream_tag_name = await get_latest_tag_name(upstream_owner, upstream_repo);
                 const current_tag_name = await get_latest_tag_name(context?.repo.owner || 'liudonghua123', context?.repo.repo || 'cyberchef-app');
                 const remove_prefix_if_exists = (str, prefix = 'v') => str.startsWith(prefix) ? str.substring(prefix.length) : str;
