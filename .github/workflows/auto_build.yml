@@ -47,7 +47,7 @@ jobs:
               if (minorA < minorB) return -1;
               if (patchA > patchB) return 1;
             }
-            
+                        
             async function get_latest_tag_name(owner, repo) {
                 let latest_tag_name = '';
                 try {
@@ -68,6 +68,7 @@ jobs:
                 console.info(`found ${owner}/${repo} latest_tag_name ${latest_tag_name}`);
                 return latest_tag_name;
             }
+
 
             
             async function check_tag_updated(upstream_owner = 'gchq', upstream_repo = 'CyberChef') {
