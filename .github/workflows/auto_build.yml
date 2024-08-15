@@ -51,13 +51,14 @@ jobs:
             async function get_latest_tag_name(owner, repo) {
                 let latest_tag_name = '';
                 try {
-                    // get the latest tag from the latest release
+                    // 尝试从最新发布中获取最新标签
                     const { data: { tag_name } } = await github.rest.repos.getLatestRelease({ owner, repo });
                     latest_tag_name = tag_name;
                 } catch (error) {
-                    // fallback to use the tags
+                    // 如果获取最新发布失败，则尝试获取标签列表
                     const { data } = await github.rest.repos.listTags({ owner, repo });
-                    if (data.length > 0) {
+                    // 检查 data 是否存在且是数组，并且至少有一个元素
+                    if (Array.isArray(data) && data.length > 0) {
                         latest_tag_name = data[0].name; // 取第一个标签的名称
                     } else {
                         console.warn(`No tags found for ${owner}/${repo}`);
@@ -67,6 +68,7 @@ jobs:
                 console.info(`found ${owner}/${repo} latest_tag_name ${latest_tag_name}`);
                 return latest_tag_name;
             }
+
             
             async function check_tag_updated(upstream_owner = 'gchq', upstream_repo = 'CyberChef') {
                 const latest_upstream_tag_name = await get_latest_tag_name(upstream_owner, upstream_repo);
