@@ -47,7 +47,9 @@ jobs:
               if (minorA < minorB) return -1;
               if (patchA > patchB) return 1;
             }
-                        
+
+
+            
             async function get_latest_tag_name(owner, repo) {
                 let latest_tag_name = '';
                 try {
@@ -55,17 +57,24 @@ jobs:
                     const { data: { tag_name } } = await github.rest.repos.getLatestRelease({ owner, repo });
                     latest_tag_name = tag_name;
                 } catch (error) {
-                    // 如果获取最新发布失败，则尝试获取标签列表
-                    const { data } = await github.rest.repos.listTags({ owner, repo });
-                    // 检查 data 是否存在且是数组，并且至少有一个元素
-                    if (Array.isArray(data) && data.length > 0) {
-                        latest_tag_name = data[0].name; // 取第一个标签的名称
-                    } else {
-                        console.warn(`No tags found for ${owner}/${repo}`);
+                    console.error(`Error fetching latest release: ${error.message}`);
+                    try {
+                        // 如果获取最新发布失败，则尝试获取标签列表
+                        const { data } = await github.rest.repos.listTags({ owner, repo });
+                        console.info(`Tags data:`, data); // 打印标签数据以进行调试
+                        // 检查 data 是否存在且是数组，并且至少有一个元素
+                        if (Array.isArray(data) && data.length > 0) {
+                            latest_tag_name = data[0].name; // 取第一个标签的名称
+                        } else {
+                            console.warn(`No tags found for ${owner}/${repo}`);
+                            return ''; // 返回空字符串或其他默认值
+                        }
+                    } catch (listTagsError) {
+                        console.error(`Error fetching tags: ${listTagsError.message}`);
                         return ''; // 返回空字符串或其他默认值
                     }
                 }
-                console.info(`found ${owner}/${repo} latest_tag_name ${latest_tag_name}`);
+                console.info(`Found ${owner}/${repo} latest_tag_name: ${latest_tag_name}`);
                 return latest_tag_name;
             }
 
