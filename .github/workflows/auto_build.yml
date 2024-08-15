@@ -54,8 +54,12 @@ jobs:
                 let latest_tag_name = '';
                 try {
                     // 尝试从最新发布中获取最新标签
-                    const { data: { tag_name } } = await github.rest.repos.getLatestRelease({ owner, repo });
-                    latest_tag_name = tag_name;
+                    const { data } = await github.rest.repos.getLatestRelease({ owner, repo });
+                    if (data && data.tag_name) {
+                        latest_tag_name = data.tag_name;
+                    } else {
+                        console.warn(`No tag_name found in latest release for ${owner}/${repo}`);
+                    }
                 } catch (error) {
                     console.error(`Error fetching latest release: ${error.message}`);
                     try {
@@ -77,6 +81,7 @@ jobs:
                 console.info(`Found ${owner}/${repo} latest_tag_name: ${latest_tag_name}`);
                 return latest_tag_name;
             }
+
 
 
             
